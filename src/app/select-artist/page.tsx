@@ -1,20 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Autocomplete,
+} from '@mui/material';
 
-import { Autocomplete, Box, Button, TextField, Typography } from '@mui/material';
-
-const MOCK_ARTISTS = [
-  'Drake',
-  'Kanye West',
-  'Tyler, The Creator',
-  'The Weeknd',
-  'Travis Scott',
-];
+import { useSpotifyStore } from '@/store/spotifyStore';
 
 const SelectArtistPage = () => {
+  const [query, setQuery] = useState('');
+  const { artists, fetchArtists } = useSpotifyStore();
   const [artist, setArtist] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (query.length > 2) {
+      fetchArtists(query);
+    }
+  }, [query, fetchArtists]);
+
+  //TODO: Create a card for spotify artists
   return (
     <Box sx={{ padding: '1.5rem', textAlign: 'center' }}>
       <Typography marginBottom={'1rem'} fontSize={18} fontWeight={600}>
@@ -22,9 +30,22 @@ const SelectArtistPage = () => {
       </Typography>
       <Autocomplete
         value={artist}
-        options={MOCK_ARTISTS}
         onChange={(event, newValue) => setArtist(newValue)}
-        renderInput={(params) => <TextField {...params} variant="outlined" />}
+        options={artists}
+        getOptionLabel={(option) => option.name} // Mostra o nome do artista
+        renderOption={(props, option) => (
+          <li {...props} key={option.id}>
+            {option.name}
+          </li>
+        )}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="outlined"
+            placeholder="Search an artist..."
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        )}
         sx={{ width: 300, margin: '0 auto', marginBottom: '2rem' }}
       />
       {artist && (
