@@ -5,17 +5,29 @@ const theme = createTheme({
     primary: {
       main: '#1ed760',
     },
+    secondary: {
+      main: '#1f1f1f',
+      light: '#2c2c2c',
+    }
   },
   typography: {
     fontFamily: 'Circular Std-Black, sans-serif',
   },
   components: {
+    MuiTypography: {
+      defaultProps: {
+        sx: {
+          color: "#fff"
+        }
+      }
+    },
     MuiPopper: {
       defaultProps: {
         sx: {
           '.MuiPaper-root': {
             marginTop: '0.1rem',
             backgroundColor: '#1f1f1f',
+            color: '#999999'
           }
         }
       }
