@@ -10,11 +10,12 @@ import {
 } from '@mui/material';
 
 import { useSpotifyStore } from '@/store/spotifyStore';
+import ArtistCard from '@/components/ArtistCard/ArtistCard';
 
 const SelectArtistPage = () => {
   const [query, setQuery] = useState('');
-  const { artists, fetchArtists } = useSpotifyStore();
-  const [artist, setArtist] = useState<string | null>(null);
+  const { artists, fetchArtists, selectedArtist, setSelectedArtist } =
+    useSpotifyStore();
 
   useEffect(() => {
     if (query.length > 2) {
@@ -22,17 +23,21 @@ const SelectArtistPage = () => {
     }
   }, [query, fetchArtists]);
 
-  //TODO: Create a card for spotify artists
   return (
-    <Box sx={{ padding: '1.5rem', textAlign: 'center' }}>
-      <Typography marginBottom={'1rem'} fontSize={18} fontWeight={600}>
+    <Box sx={{ padding: '1.5rem' }}>
+      <Typography
+        marginBottom={'1rem'}
+        fontSize={18}
+        fontWeight={600}
+        align="center"
+      >
         Select your artist to start guessing songs:
       </Typography>
       <Autocomplete
-        value={artist}
-        onChange={(event, newValue) => setArtist(newValue)}
+        value={selectedArtist}
+        onChange={(event, newValue) => setSelectedArtist(newValue)}
         options={artists}
-        getOptionLabel={(option) => option.name} // Mostra o nome do artista
+        getOptionLabel={(option) => option.name}
         renderOption={(props, option) => (
           <li {...props} key={option.id}>
             {option.name}
@@ -48,10 +53,20 @@ const SelectArtistPage = () => {
         )}
         sx={{ width: 300, margin: '0 auto', marginBottom: '2rem' }}
       />
-      {artist && (
-        <Button variant="contained" color="primary">
-          Continue
-        </Button>
+      {selectedArtist && (
+        <Box>
+          <ArtistCard
+            artist={selectedArtist}
+            sx={{ margin: '0 auto', marginBottom: '1rem' }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ margin: '0 auto', display: 'block' }}
+          >
+            Continue
+          </Button>
+        </Box>
       )}
     </Box>
   );

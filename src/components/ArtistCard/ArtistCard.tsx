@@ -1,5 +1,3 @@
-'use client'
-
 import { Box, Card, SxProps, Typography } from '@mui/material';
 
 import theme from '../../theme';
@@ -28,7 +26,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist, sx = {} }) => {
         width={130}
         height={130}
         alt={`${artist.name} image`}
-        src={artist.imageUrl || 'https://placehold.co/'}
+        src={artist.images[0].url || 'https://placehold.co/'}
       />
       <Box
         sx={{

@@ -43,7 +43,7 @@ const theme = createTheme({
     },
     MuiButton: {
       defaultProps: {
-        sx : {
+        sx: {
           borderRadius: '31.25rem'
         }
       }

@@ -1,15 +1,19 @@
 import { create } from "zustand";
 import { searchArtist } from "../lib/spotifyApi"
+import { Artist } from "@/types";
 
-//TODO: Create global types for artists, songs, etc.
 interface SpotifyState {
-  artists: any[];
+  artists: Artist[];
+  selectedArtist: Artist | null;
   fetchArtists: (query: string) => Promise<void>;
+  setSelectedArtist: (artist: Artist | null) => void;
 }
 
 export const useSpotifyStore = create<SpotifyState>((set) => ({
   artists: [],
-  fetchArtists: async (query: string) => {
+  selectedArtist: null,
+
+  fetchArtists: async (query: string): Promise<void> => {
     try {
       const artists = await searchArtist(query);
       set({ artists });
@@ -17,4 +21,6 @@ export const useSpotifyStore = create<SpotifyState>((set) => ({
       console.error("Error trying to search artists:", error);
     }
   },
+
+  setSelectedArtist: (artist) => set({ selectedArtist: artist }),
 }));

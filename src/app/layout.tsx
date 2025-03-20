@@ -12,6 +12,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  //FIXME: There's a error with Next in content hydration, apparently is a browser extension that is causing this issue
+  // Find out and fix it!
   useEffect(() => {
     document.body.setAttribute('data-lt-installed', 'true');
   }, []);
