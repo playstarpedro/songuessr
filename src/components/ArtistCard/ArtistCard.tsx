@@ -1,5 +1,6 @@
-import { Box, Card, SxProps, Typography } from '@mui/material';
+import { Box, Card, List, ListItem, SxProps, Typography } from '@mui/material';
 
+import Tag from '../Tag/Tag';
 import theme from '../../theme';
 import { Artist } from '../../types';
 
@@ -12,7 +13,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist, sx = {} }) => {
   return (
     <Card
       sx={{
-        gap: '2rem',
+        gap: '1rem',
         height: '100%',
         display: 'flex',
         padding: '1rem',
@@ -36,24 +37,23 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist, sx = {} }) => {
         }}
       >
         <Typography fontSize={30}>{artist.name}</Typography>
-        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+        <List
+          disablePadding
+          sx={{
+            gap: '0.4rem',
+            display: 'flex',
+            flexWrap: 'wrap',
+            overflowY: 'scroll',
+            maxHeight: '3.75rem',
+          }}
+        >
           {artist.genres &&
             artist.genres.map((genre) => (
-              <Typography
-                key={genre}
-                variant="caption"
-                sx={{
-                  color: '#fff',
-                  padding: '0.2rem',
-                  paddingX: '0.6rem',
-                  borderRadius: '31.25rem',
-                  backgroundColor: theme.palette.primary.dark,
-                }}
-              >
-                {genre}
-              </Typography>
+              <ListItem key={genre} disablePadding sx={{ width: 'auto' }}>
+                <Tag text={genre} />
+              </ListItem>
             ))}
-        </Box>
+        </List>
       </Box>
     </Card>
   );

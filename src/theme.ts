@@ -62,7 +62,7 @@ const theme = createTheme({
           margin: 0,
           padding: 0,
           color: '#fff',
-          boxSizing: 'border-box',
+          boxSizing: 'border-box !important',
           fontFamily: 'Circular Std-Black, sans-serif',
         },
         body: {
